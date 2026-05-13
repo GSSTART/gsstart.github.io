@@ -1,0 +1,639 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>同 居 · 希尔薇与莫妮卡</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            background: #f7f3ef;
+            min-height: 100vh;
+            padding: 1.5rem 1rem;
+            font-family: 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', 'Helvetica Neue', sans-serif;
+            color: #4a4040;
+            background-image: radial-gradient(ellipse at 30% 30%, #f0ebe6 0%, #e8e0d8 100%);
+        }
+
+        .container {
+            max-width: 780px;
+            margin: 0 auto;
+        }
+
+        .header {
+            text-align: center;
+            padding: 2.2rem 0.5rem 1.5rem;
+            position: relative;
+            border-bottom: 1px solid #d8ccc4;
+            margin-bottom: 2rem;
+        }
+
+        .header h1 {
+            font-size: 2.6rem;
+            font-weight: 400;
+            letter-spacing: 6px;
+            color: #6a4a5a;
+            font-family: 'Segoe UI', 'Georgia', 'PingFang SC', serif;
+            text-shadow: 0 2px 8px rgba(120, 80, 100, 0.06);
+            line-height: 1.3;
+        }
+
+        .header .sub {
+            margin-top: 0.5rem;
+            font-size: 0.95rem;
+            color: #9a8a8a;
+            letter-spacing: 4px;
+            font-weight: 300;
+        }
+
+        .header .divider {
+            margin: 1rem auto 0;
+            width: 60px;
+            height: 2px;
+            background: #d0b8b8;
+            border-radius: 2px;
+        }
+
+        .card {
+            background: rgba(255, 250, 245, 0.75);
+            border: 1px solid #e4d8d0;
+            border-radius: 20px;
+            padding: 1.6rem 1.5rem;
+            margin-bottom: 1.5rem;
+            backdrop-filter: blur(2px);
+            box-shadow: 0 6px 24px rgba(100, 70, 60, 0.06);
+            transition: border-color 0.2s;
+        }
+
+        .card-title {
+            font-size: 1rem;
+            font-weight: 500;
+            color: #6a4a5a;
+            letter-spacing: 2px;
+            margin-bottom: 1.2rem;
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+        }
+
+        .card-title .icon {
+            font-size: 1.1rem;
+            opacity: 0.7;
+        }
+
+        .field {
+            margin-bottom: 1rem;
+        }
+
+        .field label {
+            display: block;
+            font-size: 0.82rem;
+            color: #8a7272;
+            margin-bottom: 0.2rem;
+            letter-spacing: 0.5px;
+            font-weight: 500;
+        }
+
+        .field input, .field textarea, .field select {
+            width: 100%;
+            background: rgba(255, 248, 242, 0.7);
+            border: 1px solid #ddd0c8;
+            border-radius: 12px;
+            padding: 0.65rem 0.9rem;
+            color: #4a4040;
+            font-size: 0.92rem;
+            font-family: inherit;
+            transition: 0.2s;
+            resize: vertical;
+        }
+
+        .field input:focus, .field textarea:focus, .field select:focus {
+            outline: none;
+            border-color: #b098a0;
+            box-shadow: 0 0 12px rgba(160, 130, 140, 0.1);
+        }
+
+        .field textarea { min-height: 70px; }
+        ::placeholder { color: #b8a8a0; opacity: 0.7; }
+
+        .row2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.8rem;
+        }
+        .row3 {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 0.8rem;
+        }
+
+        @media (max-width: 600px) {
+            .row2, .row3 { grid-template-columns: 1fr; }
+            .header h1 { font-size: 1.8rem; letter-spacing: 3px; }
+            .card { padding: 1.2rem 1rem; }
+            .row3 { grid-template-columns: 1fr 1fr; }
+        }
+
+        .slider-container {
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+        }
+        .slider-container input[type="range"] {
+            flex: 1;
+            -webkit-appearance: none;
+            appearance: none;
+            height: 4px;
+            background: linear-gradient(90deg, #d0b8b8, #b098a8);
+            border-radius: 3px;
+            outline: none;
+            cursor: pointer;
+        }
+        .slider-container input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 20px;
+            height: 20px;
+            background: radial-gradient(circle, #c8a8b0, #a88290);
+            border-radius: 50%;
+            box-shadow: 0 0 12px rgba(160, 100, 120, 0.15);
+            cursor: pointer;
+            border: 2px solid #f5ede8;
+        }
+        .slider-container input[type="range"]::-moz-range-thumb {
+            width: 20px;
+            height: 20px;
+            background: radial-gradient(circle, #c8a8b0, #a88290);
+            border-radius: 50%;
+            box-shadow: 0 0 12px rgba(160, 100, 120, 0.15);
+            cursor: pointer;
+            border: 2px solid #f5ede8;
+        }
+        .slider-value {
+            min-width: 3.2rem;
+            text-align: center;
+            font-size: 1rem;
+            font-weight: 500;
+            color: #6a4a5a;
+            font-family: 'Georgia', serif;
+        }
+
+        .hint-text {
+            font-size: 0.8rem;
+            color: #a88a8a;
+            margin-top: 0.25rem;
+            font-style: italic;
+            min-height: 1.4rem;
+            transition: 0.2s;
+        }
+
+        .btn {
+            background: linear-gradient(135deg, #b098a0, #a88290);
+            border: none;
+            padding: 0.8rem 1.6rem;
+            border-radius: 40px;
+            font-weight: 400;
+            font-size: 0.95rem;
+            color: #f5ede8;
+            cursor: pointer;
+            transition: 0.2s;
+            letter-spacing: 2px;
+            width: 100%;
+            text-align: center;
+            border: 1px solid rgba(180, 140, 150, 0.2);
+            box-shadow: 0 4px 16px rgba(140, 100, 110, 0.12);
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 28px rgba(140, 100, 110, 0.18);
+            background: linear-gradient(135deg, #c0a8b0, #b898a8);
+        }
+        .btn:active { transform: scale(0.97); }
+
+        .btn-secondary {
+            background: transparent;
+            border: 1px solid #ddd0c8;
+            color: #8a7272;
+            box-shadow: none;
+        }
+        .btn-secondary:hover {
+            border-color: #b098a0;
+            color: #6a4a5a;
+            background: rgba(180, 140, 150, 0.04);
+            box-shadow: none;
+        }
+
+        .btn-row {
+            display: flex;
+            gap: 0.8rem;
+            margin-top: 1.2rem;
+            flex-wrap: wrap;
+        }
+        .btn-row .btn { flex: 1; min-width: 100px; }
+
+        .preview-box {
+            background: rgba(255, 248, 242, 0.5);
+            border: 1px solid #e4d8d0;
+            border-radius: 14px;
+            padding: 1.2rem;
+            min-height: 200px;
+            max-height: 400px;
+            overflow-y: auto;
+            font-size: 0.88rem;
+            line-height: 1.7;
+            color: #5a4848;
+            white-space: pre-wrap;
+            word-break: break-word;
+            font-family: 'Segoe UI', 'Georgia', serif;
+        }
+
+        .preview-box .placeholder {
+            color: #b8a8a0;
+            font-style: italic;
+        }
+
+        .toast {
+            position: fixed;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #f5ede8;
+            border: 1px solid #d0b8b8;
+            color: #6a4a5a;
+            padding: 0.7rem 2rem;
+            border-radius: 40px;
+            font-size: 0.85rem;
+            box-shadow: 0 8px 36px rgba(80, 50, 50, 0.1);
+            opacity: 0;
+            transition: opacity 0.4s;
+            z-index: 100;
+            pointer-events: none;
+            white-space: nowrap;
+            letter-spacing: 1px;
+            font-family: 'Segoe UI', serif;
+        }
+        .toast.show { opacity: 1; }
+
+        .footer {
+            text-align: center;
+            padding: 1.2rem 0 0.5rem;
+            font-size: 0.72rem;
+            color: #b8a8a0;
+            letter-spacing: 3px;
+            border-top: 1px solid #e4d8d0;
+            margin-top: 0.5rem;
+            font-family: 'Georgia', serif;
+        }
+
+        .element-books {
+            position: fixed;
+            pointer-events: none;
+            z-index: -1;
+            font-size: 8rem;
+            opacity: 0.03;
+            color: #a88290;
+            bottom: 5%;
+            right: 5%;
+            transform: rotate(-10deg);
+            font-family: 'Georgia', serif;
+        }
+        .element-leaf {
+            position: fixed;
+            pointer-events: none;
+            z-index: -1;
+            font-size: 6rem;
+            opacity: 0.04;
+            color: #8a9a7a;
+            top: 12%;
+            left: 3%;
+            transform: rotate(15deg);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="element-books">📖</div>
+    <div class="element-leaf">🍃</div>
+
+    <div class="container">
+        <div class="header">
+            <h1>同 居</h1>
+            <div class="sub">— 希尔薇与莫妮卡 —</div>
+            <div class="divider"></div>
+        </div>
+
+        <!-- 简介 -->
+        <div class="card">
+            <div class="card-title"><span class="icon">🏠</span> 关于这间屋子</div>
+            <div style="font-size:0.92rem; line-height:1.8; color:#6a5a5a;">
+                一间寻常的公寓，朝南，采光尚可。客厅里有一张被阳光晒褪色的布艺沙发，窗台上摆着一小盆绿植，书桌上摊着一本翻开了一半的诗集。你搬进来的时候，希尔薇帮你收拾了房间，莫妮卡靠在门框边看着你们，手里端着一杯已经放凉的花茶。<br>
+                三个人，一间屋子，一段安静的日常。<br>
+                偶尔会有一些不属于这个世界的声响，从书页之间、从梦境深处、从她欲言又止的沉默中泄漏出来。但你从不追问。
+            </div>
+        </div>
+
+        <!-- 自定义人设 -->
+        <div class="card">
+            <div class="card-title"><span class="icon">✎</span> 你的模样</div>
+            <div class="field">
+                <label>姓名</label>
+                <input type="text" id="playerName" placeholder="你的名字">
+            </div>
+            <div class="row2">
+                <div class="field">
+                    <label>年龄</label>
+                    <div class="slider-container">
+                        <input type="range" id="ageSlider" min="18" max="60" value="26" step="1">
+                        <span class="slider-value" id="ageDisplay">26</span>
+                    </div>
+                    <div class="hint-text" id="ageHint">正值青春的年纪，精力充沛。</div>
+                </div>
+                <div class="field">
+                    <label>身高 (cm)</label>
+                    <div class="slider-container">
+                        <input type="range" id="heightSlider" min="150" max="200" value="175" step="1">
+                        <span class="slider-value" id="heightDisplay">175</span>
+                    </div>
+                    <div class="hint-text" id="heightHint">中等偏上，恰到好处。</div>
+                </div>
+            </div>
+            <div class="field">
+                <label>外貌特征</label>
+                <textarea id="playerAppearance" placeholder="发型、眸色、气质、常穿的衣物……"></textarea>
+            </div>
+            <div class="field">
+                <label>性格描述</label>
+                <textarea id="playerPersonality" placeholder="沉默温和 / 偶尔笨拙 / 习惯倾听 …"></textarea>
+            </div>
+
+            <!-- 肉棒尺寸滑块 -->
+            <div class="card-title" style="margin-top:1.2rem; border-top:1px solid #e4d8d0; padding-top:0.8rem;"><span class="icon">🍆</span> 肉棒尺寸</div>
+            <div class="row2">
+                <div class="field">
+                    <label>长度 (cm)</label>
+                    <div class="slider-container">
+                        <input type="range" id="lengthSlider" min="1" max="30" value="14" step="0.5">
+                        <span class="slider-value" id="lengthDisplay">14</span>
+                    </div>
+                    <div class="hint-text" id="lengthHint">中规中矩，含在嘴里刚好。</div>
+                </div>
+                <div class="field">
+                    <label>直径 (cm)</label>
+                    <div class="slider-container">
+                        <input type="range" id="girthSlider" min="2" max="6" value="3.5" step="0.1">
+                        <span class="slider-value" id="girthDisplay">3.5</span>
+                    </div>
+                    <div class="hint-text" id="girthHint">不会太撑，但能填满她。</div>
+                </div>
+            </div>
+
+            <!-- 持久与恢复 -->
+            <div class="card-title" style="margin-top:1.2rem; border-top:1px solid #e4d8d0; padding-top:0.8rem;"><span class="icon">⏳</span> 性能力</div>
+            <div class="row2">
+                <div class="field">
+                    <label>性交时长 (分钟)</label>
+                    <div class="slider-container">
+                        <input type="range" id="durationSlider" min="1" max="120" value="20" step="1">
+                        <span class="slider-value" id="durationDisplay">20</span>
+                    </div>
+                    <div class="hint-text" id="durationHint">可以好好享受一场，不至于太快结束。</div>
+                </div>
+                <div class="field">
+                    <label>恢复时间 (分钟)</label>
+                    <div class="slider-container">
+                        <input type="range" id="recoverySlider" min="1" max="120" value="30" step="1">
+                        <span class="slider-value" id="recoveryDisplay">30</span>
+                    </div>
+                    <div class="hint-text" id="recoveryHint">歇一会儿就能再来一次。</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 预览与生成 -->
+        <div class="card">
+            <div class="card-title"><span class="icon">📋</span> 你的档案</div>
+            <div class="preview-box" id="previewOutput">
+                <span class="placeholder">填写上方内容后点击生成</span>
+            </div>
+            <div class="btn-row">
+                <button class="btn" id="generateBtn">✦ 生 成</button>
+                <button class="btn btn-secondary" id="copyBtn">📋 复制</button>
+            </div>
+        </div>
+
+        <div class="footer">♡ 希尔薇 · 莫妮卡 · 你 ♡</div>
+    </div>
+
+    <div class="toast" id="toast"></div>
+
+    <script>
+        (function() {
+            // DOM
+            const playerName = document.getElementById('playerName');
+            const ageSlider = document.getElementById('ageSlider');
+            const ageDisplay = document.getElementById('ageDisplay');
+            const ageHint = document.getElementById('ageHint');
+            const heightSlider = document.getElementById('heightSlider');
+            const heightDisplay = document.getElementById('heightDisplay');
+            const heightHint = document.getElementById('heightHint');
+            const playerAppearance = document.getElementById('playerAppearance');
+            const playerPersonality = document.getElementById('playerPersonality');
+            const lengthSlider = document.getElementById('lengthSlider');
+            const lengthDisplay = document.getElementById('lengthDisplay');
+            const lengthHint = document.getElementById('lengthHint');
+            const girthSlider = document.getElementById('girthSlider');
+            const girthDisplay = document.getElementById('girthDisplay');
+            const girthHint = document.getElementById('girthHint');
+            const durationSlider = document.getElementById('durationSlider');
+            const durationDisplay = document.getElementById('durationDisplay');
+            const durationHint = document.getElementById('durationHint');
+            const recoverySlider = document.getElementById('recoverySlider');
+            const recoveryDisplay = document.getElementById('recoveryDisplay');
+            const recoveryHint = document.getElementById('recoveryHint');
+            const previewOutput = document.getElementById('previewOutput');
+            const generateBtn = document.getElementById('generateBtn');
+            const copyBtn = document.getElementById('copyBtn');
+            const toast = document.getElementById('toast');
+
+            // 年龄描述
+            function getAgeHint(age) {
+                const a = Number(age);
+                if (a <= 22) return '正值青春年少，身体充满活力，每晚都可以折腾好几次。';
+                if (a <= 28) return '成熟与活力并存的年纪，既懂得温柔又有使不完的劲。';
+                if (a <= 35) return '正值壮年，经验丰富，知道怎么让女人欲仙欲死。';
+                if (a <= 45) return '成熟稳重的魅力，持久力依然不减，更懂得如何取悦。';
+                return '岁月沉淀出的从容，每一次进入都带着他独有的厚重。';
+            }
+
+            // 身高描述
+            function getHeightHint(h) {
+                const height = Number(h);
+                if (height < 160) return '娇小的体型，让人忍不住想把你搂在怀里。';
+                if (height < 165) return '略低于平均，但抱起来刚刚好，头可以埋在她胸前。';
+                if (height < 175) return '中等身高，拥抱时她的下巴刚好搁在你肩上。';
+                if (height < 185) return '挺拔的身姿，接吻时需要她微微踮脚。';
+                return '高大威猛，她站在你面前显得格外娇小可人。';
+            }
+
+            // 长度描述
+            function getLengthHint(len) {
+                const l = Number(len);
+                if (l <= 6) return '小巧可爱，用舌尖就能包裹住整根，她轻轻一笑：「这么小，一口就吞下了呢。」';
+                if (l <= 9) return '比平均稍短，但胜在灵活，恰好能抵住她最敏感的那一点。';
+                if (l <= 12) return '中规中矩的尺寸，她含住龟头时刚好顶到喉咙口，不会太难受。';
+                if (l <= 15) return '不错的长度，每次插入都能填满她的阴道，让她发出满足的叹息。';
+                if (l <= 18) return '有些粗长了，她得深呼吸才能完全吞进去，进去后每一步都让她颤抖。';
+                if (l <= 22) return '惊人的长度，她需要双手握住根部才能勉强含住，眼里闪过一丝恐惧。';
+                if (l <= 26) return '巨物般的尺寸，她看着你脱裤子时就已双腿发软，央求你轻一点。';
+                return '怪物般的长度，她跪在你面前仰望着，浑身发抖：「这……这真的能进去吗…」';
+            }
+
+            // 直径描述
+            function getGirthHint(g) {
+                const g2 = Number(g);
+                if (g2 <= 2.5) return '纤细的茎身，她可以轻松含住整根，几乎没有扩张感。';
+                if (g2 <= 3.0) return '适中的粗细，她的小嘴刚好能圈住，不会觉得撑。';
+                if (g2 <= 3.5) return '恰到好处的饱满，插入时能撑开她阴道的褶皱，带来充实的满足感。';
+                if (g2 <= 4.0) return '略粗，她需要用嘴唇紧紧裹住才能含稳，阴道口会被撑成一个圆洞。';
+                if (g2 <= 4.5) return '粗壮的茎身，她双腿大开才能容纳，每次抽送都刮擦着内壁。';
+                if (g2 <= 5.0) return '非常粗大，她需要润滑才能进入，龟头冠沟卡在阴道口时的感觉让她尖叫。';
+                return '巨炮般的直径，她必须用手掰开阴唇才能对准备，进去后阴道被撑得几乎没有缝隙。';
+            }
+
+            // 持久描述
+            function getDurationHint(d) {
+                const d2 = Number(d);
+                if (d2 <= 3) return '闪电战，你刚进去没动几下就缴枪了，她还没开始你就结束了。';
+                if (d2 <= 5) return '快枪手，勉强能让她感受到几下冲击，但她显然意犹未尽。';
+                if (d2 <= 10) return '一般般，能够让她稍微尝到一点甜头，但还不够尽兴。';
+                if (d2 <= 15) return '正常水平，足够让她进入状态，开始主动迎合你的节奏。';
+                if (d2 <= 25) return '挺能干的，她能完整地经历一次高潮，腿在你腰间缠得紧紧的。';
+                if (d2 <= 40) return '持久力出色，她高潮连连，阴道开始痉挛，求你快射。';
+                if (d2 <= 60) return '非常持久，她已经被你干到浑身瘫软，淫水顺着大腿流了一沙发。';
+                return '超长待机，她哭喊着求你停下，你却还没有要射的迹象。';
+            }
+
+            // 恢复描述
+            function getRecoveryHint(r) {
+                const r2 = Number(r);
+                if (r2 <= 5) return '钢铁般的恢复力，刚射完还硬着，直接可以继续下一轮。';
+                if (r2 <= 10) return '稍作喘息就能再起，她还没缓过来，你又挺了进去。';
+                if (r2 <= 20) return '短暂的贤者时间后，又能生龙活虎地压在她身上。';
+                if (r2 <= 30) return '休息半小时左右就能重振雄风，一晚来三次不成问题。';
+                if (r2 <= 45) return '需要较长的恢复，但每次都能保持高质量，足够喂饱她。';
+                if (r2 <= 60) return '一小时左右才能再来，但第二次通常会比第一次更持久。';
+                if (r2 <= 90) return '需要好好休息一夜，但第二天早上会硬邦邦地顶着她。';
+                return '一次之后就需要很长时间才能恢复，希望她不会嫌你慢。';
+            }
+
+            // 滑块事件绑定
+            function bindSlider(slider, display, hintFunc, hintEl) {
+                slider.addEventListener('input', function() {
+                    const val = this.value;
+                    display.textContent = val;
+                    if (hintFunc) hintEl.textContent = hintFunc(val);
+                });
+            }
+
+            bindSlider(ageSlider, ageDisplay, getAgeHint, ageHint);
+            bindSlider(heightSlider, heightDisplay, getHeightHint, heightHint);
+            bindSlider(lengthSlider, lengthDisplay, getLengthHint, lengthHint);
+            bindSlider(girthSlider, girthDisplay, getGirthHint, girthHint);
+            bindSlider(durationSlider, durationDisplay, getDurationHint, durationHint);
+            bindSlider(recoverySlider, recoveryDisplay, getRecoveryHint, recoveryHint);
+
+            // 初始化描述
+            ageHint.textContent = getAgeHint(ageSlider.value);
+            heightHint.textContent = getHeightHint(heightSlider.value);
+            lengthHint.textContent = getLengthHint(lengthSlider.value);
+            girthHint.textContent = getGirthHint(girthSlider.value);
+            durationHint.textContent = getDurationHint(durationSlider.value);
+            recoveryHint.textContent = getRecoveryHint(recoverySlider.value);
+
+            // Toast
+            function showToast(msg) {
+                toast.textContent = msg;
+                toast.classList.add('show');
+                setTimeout(() => toast.classList.remove('show'), 2200);
+            }
+
+            // 生成开场白
+            function generateProfile() {
+                const name = playerName.value.trim() || '你';
+                const age = ageSlider.value;
+                const height = heightSlider.value;
+                const appearance = playerAppearance.value.trim() || '未填写';
+                const personality = playerPersonality.value.trim() || '未填写';
+                const length = lengthSlider.value;
+                const girth = girthSlider.value;
+                const duration = durationSlider.value;
+                const recovery = recoverySlider.value;
+
+                const ageDesc = getAgeHint(age);
+                const heightDesc = getHeightHint(height);
+                const lengthDesc = getLengthHint(length);
+                const girthDesc = getGirthHint(girth);
+                const durationDesc = getDurationHint(duration);
+                const recoveryDesc = getRecoveryHint(recovery);
+
+                const output = `【设定概览】
+姓名：${name}
+年龄：${age}岁 · ${ageDesc}
+身高：${height}cm · ${heightDesc}
+外貌：${appearance}
+性格：${personality}
+
+【肉棒尺寸】
+长度：${length}cm · ${lengthDesc}
+直径：${girth}cm · ${girthDesc}
+
+【性能力】
+每次时长：约${duration}分钟 · ${durationDesc}
+恢复时间：约${recovery}分钟 · ${recoveryDesc}
+
+【开场】
+今天下午，你和莫妮卡正坐在客厅的沙发上。她手里捧着一本诗集，偶尔念一两句给你听，阳光透过窗帘的缝隙落在她膝上。你半靠着沙发扶手，几乎要睡着了。就在这时，书桌上的电脑屏幕突然闪烁了一下——不是正常的待机亮起，而是一种从未见过的、柔和的白光。紧接着，一个身影从屏幕中跌了出来，轻巧地落在书桌旁边的地板上。她穿着一身陌生的衣服，眼神带着茫然和警惕，像是刚从某个遥远的地方被抛到这里。
+那就是希尔薇。
+她抬起头，目光扫过房间，最后落在你身上，像是认出了什么，又像是不敢确认。`;
+
+                previewOutput.innerHTML = output.replace(/\n/g, '<br>');
+                return output;
+            }
+
+            generateBtn.addEventListener('click', function() {
+                const text = generateProfile();
+                if (text) showToast('♡ 已生成你的档案');
+            });
+
+            copyBtn.addEventListener('click', function() {
+                const text = previewOutput.innerText || previewOutput.textContent;
+                if (!text || text.includes('填写上方内容')) {
+                    showToast('请先生成档案');
+                    return;
+                }
+                const clean = text.replace(/<br>/g, '\n').replace(/ /g, ' ');
+                navigator.clipboard.writeText(clean).then(() => {
+                    showToast('♡ 已复制到剪贴板');
+                }).catch(() => {
+                    const ta = document.createElement('textarea');
+                    ta.value = clean;
+                    document.body.appendChild(ta);
+                    ta.select();
+                    document.execCommand('copy');
+                    document.body.removeChild(ta);
+                    showToast('♡ 已复制到剪贴板');
+                });
+            });
+
+            // 初始生成
+            generateProfile();
+        })();
+    </script>
+</body>
+</html>

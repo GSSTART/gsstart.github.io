@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>我的青春年华 · 恋爱指南</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            background: #faf2ed;
+            min-height: 100vh;
+            padding: 1rem;
+            font-family: 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', 'Helvetica Neue', sans-serif;
+            color: #1a1a1a;
+        }
+        .container {
+            max-width: 820px;
+            margin: 0 auto;
+        }
+        /* 漫画主标题 */
+        .main-title {
+            text-align: center;
+            padding: 1.8rem 0.5rem 1rem;
+        }
+        .main-title h1 {
+            font-size: 2.4rem;
+            font-weight: 900;
+            letter-spacing: 4px;
+            color: #000;
+            font-family: 'Segoe UI', 'PingFang SC', sans-serif;
+            display: inline-block;
+            padding: 0.2rem 1.8rem;
+            border: 4px solid #000;
+            background: #fff;
+            box-shadow: 6px 6px 0 #000;
+            line-height: 1.3;
+        }
+        .main-title .sub {
+            margin-top: 0.7rem;
+            font-size: 0.85rem;
+            color: #444;
+            letter-spacing: 4px;
+            font-weight: 600;
+        }
+        .main-title .divider {
+            margin: 0.6rem auto 0;
+            width: 80px;
+            height: 5px;
+            background: #000;
+        }
+        /* 漫画标签栏 - 方形直角 */
+        .tab-bar {
+            display: flex;
+            gap: 0.4rem;
+            margin: 1.2rem 0 1rem;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        .tab-btn {
+            flex: 1;
+            min-width: 68px;
+            padding: 0.65rem 0.2rem;
+            background: #fff;
+            border: 3px solid #000;
+            font-size: 0.82rem;
+            font-weight: 700;
+            color: #000;
+            cursor: pointer;
+            transition: 0.08s;
+            box-shadow: 4px 4px 0 #000;
+            text-align: center;
+            letter-spacing: 0.5px;
+            font-family: inherit;
+        }
+        .tab-btn:hover {
+            transform: translate(-1px, -1px);
+            box-shadow: 6px 6px 0 #000;
+        }
+        .tab-btn:active {
+            transform: translate(2px, 2px);
+            box-shadow: 2px 2px 0 #000;
+        }
+        .tab-btn.active {
+            background: #000;
+            color: #fff;
+            box-shadow: 4px 4px 0 #555;
+        }
+        .tab-content { display: none; }
+        .tab-content.active { display: block; }
+
+        /* 卡片 - 直角方形 */
+        .card {
+            background: #fff;
+            border: 4px solid #000;
+            padding: 1.5rem 1.4rem;
+            margin-bottom: 1.2rem;
+            box-shadow: 6px 6px 0 #000;
+        }
+        .card-title {
+            font-size: 1.05rem;
+            font-weight: 800;
+            color: #000;
+            letter-spacing: 1px;
+            margin-bottom: 0.8rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            border-bottom: 3px solid #000;
+            padding-bottom: 0.5rem;
+        }
+        .card-title .icon { font-size: 1.1rem; }
+
+        /* 角色卡 - 直角 */
+        .char-card {
+            background: #fff;
+            border: 3px solid #000;
+            padding: 1rem 1.1rem;
+            margin-bottom: 0.8rem;
+            box-shadow: 4px 4px 0 #000;
+        }
+        .char-card .name { font-size: 1.05rem; font-weight: 800; color: #000; }
+        .char-card .tag { font-size: 0.72rem; color: #555; font-weight: 600; letter-spacing: 0.5px; }
+        .char-card .desc { font-size: 0.85rem; line-height: 1.7; color: #1a1a1a; margin-top: 0.4rem; }
+        .char-card .whisper {
+            font-size: 0.82rem; line-height: 1.6; color: #000;
+            margin-top: 0.5rem; font-style: italic;
+            padding: 0.5rem 0.8rem;
+            border: 2px dashed #000;
+            background: #faf5f0;
+        }
+
+        /* 表单 - 直角 */
+        .field { margin-bottom: 0.9rem; }
+        .field label {
+            display: block; font-size: 0.82rem; color: #222;
+            margin-bottom: 0.2rem; font-weight: 700;
+        }
+        .field input, .field textarea {
+            width: 100%; background: #fff;
+            border: 3px solid #000;
+            padding: 0.6rem 0.9rem;
+            color: #1a1a1a; font-size: 0.9rem; font-family: inherit;
+            transition: 0.1s; resize: vertical;
+        }
+        .field input:focus, .field textarea:focus {
+            outline: none;
+            box-shadow: 0 0 0 4px rgba(0,0,0,0.08);
+        }
+        .field textarea { min-height: 60px; }
+        ::placeholder { color: #aaa; opacity: 0.8; font-style: italic; }
+        .row2 { display: grid; grid-template-columns: 1fr 1fr; gap: 0.8rem; }
+        @media (max-width: 520px) {
+            .row2 { grid-template-columns: 1fr; }
+            .main-title h1 { font-size: 1.5rem; padding: 0.2rem 1rem; }
+            .card { padding: 1rem 0.8rem; }
+            .tab-btn { min-width: 56px; padding: 0.5rem 0.1rem; font-size: 0.7rem; }
+        }
+
+        /* 滑块 - 直角风格 */
+        .slider-container { display: flex; align-items: center; gap: 0.5rem; }
+        .slider-container input[type="range"] {
+            flex: 1; -webkit-appearance: none; appearance: none;
+            height: 8px; background: #fff;
+            border: 3px solid #000; outline: none; cursor: pointer;
+        }
+        .slider-container input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none; appearance: none;
+            width: 22px; height: 22px; background: #000; cursor: pointer;
+            border: 2px solid #fff; box-shadow: 0 0 0 2px #000;
+        }
+        .slider-container input[type="range"]::-moz-range-thumb {
+            width: 22px; height: 22px; background: #000; cursor: pointer;
+            border: 2px solid #fff; box-shadow: 0 0 0 2px #000;
+        }
+        .slider-value {
+            min-width: 3rem; text-align: center; font-size: 1rem;
+            font-weight: 800; color: #000; font-family: monospace;
+            background: #fff; border: 3px solid #000; padding: 0.1rem 0.3rem;
+        }
+        .hint-text, .age-tip {
+            font-size: 0.78rem; color: #222; margin-top: 0.25rem;
+            font-style: italic; min-height: 1.5rem; line-height: 1.4;
+            padding: 0.2rem 0.4rem; border-left: 4px solid #000;
+        }
+        .age-tip { text-align: center; background: #f4eee8; border: 2px solid #000; font-weight: 600; font-style: normal; }
+
+        /* 预设按钮 - 直角 */
+        .preset-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 0.5rem; margin-top: 0.3rem; }
+        @media (max-width: 520px) { .preset-grid { grid-template-columns: 1fr; } }
+        .preset-btn {
+            background: #fff; border: 3px solid #000;
+            padding: 0.6rem 0.8rem; font-size: 0.8rem; color: #000;
+            cursor: pointer; transition: 0.08s; text-align: left;
+            font-family: inherit; box-shadow: 4px 4px 0 #000;
+        }
+        .preset-btn:hover { transform: translate(-1px, -1px); box-shadow: 6px 6px 0 #000; }
+        .preset-btn:active { transform: translate(2px, 2px); box-shadow: 2px 2px 0 #000; }
+        .preset-btn.active { background: #000; color: #fff; box-shadow: 4px 4px 0 #555; }
+        .preset-btn .p-title { font-weight: 800; font-size: 0.82rem; }
+        .preset-btn .p-desc { font-size: 0.7rem; color: #666; margin-top: 0.15rem; }
+        .preset-btn.active .p-desc { color: #ddd; }
+
+        .preview-box {
+            background: #fff; border: 4px solid #000;
+            padding: 1rem; min-height: 200px; max-height: 420px; overflow-y: auto;
+            font-size: 0.85rem; line-height: 1.7; color: #1a1a1a;
+            white-space: pre-wrap; word-break: break-word;
+        }
+        .preview-box .placeholder { color: #aaa; font-style: italic; }
+
+        .btn {
+            background: #000; border: none; padding: 0.75rem 1.4rem;
+            font-weight: 800; font-size: 0.9rem; color: #fff;
+            cursor: pointer; transition: 0.08s; letter-spacing: 2px;
+            width: 100%; text-align: center;
+            box-shadow: 5px 5px 0 #555; font-family: inherit;
+            border: 3px solid #000;
+        }
+        .btn:hover { transform: translate(-2px, -2px); box-shadow: 7px 7px 0 #555; }
+        .btn:active { transform: translate(2px, 2px); box-shadow: 3px 3px 0 #555; }
+        .btn-secondary { background: #fff; color: #000; box-shadow: 5px 5px 0 #000; }
+        .btn-secondary:hover { box-shadow: 7px 7px 0 #000; }
+        .btn-row { display: flex; gap: 0.8rem; margin-top: 1rem; flex-wrap: wrap; }
+        .btn-row .btn { flex: 1; min-width: 100px; }
+
+        .toast {
+            position: fixed; bottom: 2rem; left: 50%; transform: translateX(-50%);
+            background: #000; border: 3px solid #fff; color: #fff;
+            padding: 0.7rem 2rem; font-size: 0.85rem; font-weight: 700;
+            box-shadow: 5px 5px 0 #000; opacity: 0; transition: opacity 0.3s;
+            z-index: 100; pointer-events: none; white-space: nowrap; letter-spacing: 1px;
+        }
+        .toast.show { opacity: 1; }
+        .footer { text-align: center; padding: 1rem 0 0.2rem; font-size: 0.72rem; color: #555; letter-spacing: 3px; font-weight: 700; }
+        .dot-bg { position: fixed; top:0; left:0; right:0; bottom:0; pointer-events:none; z-index:-1; background-image:radial-gradient(circle,rgba(0,0,0,0.04) 1px,transparent 1px); background-size:12px 12px; }
+    </style>
+</head>
+<body>
+    <div class="dot-bg"></div>
+    <div class="container">
+        <div class="main-title">
+            <h1>我的青春年华 · 恋爱指南</h1>
+            <div class="sub">— 致 那 些 未 曾 说 出 口 的 心 动 —</div>
+            <div class="divider"></div>
+        </div>
+        <div class="tab-bar">
+            <button class="tab-btn active" data-tab="story">背景故事</button>
+            <button class="tab-btn" data-tab="characters">角色设定</button>
+            <button class="tab-btn" data-tab="config">玩家配置</button>
+            <button class="tab-btn" data-tab="opening">开场白</button>
+            <button class="tab-btn" data-tab="archive">学生档案</button>
+        </div>
+        <!-- 背景故事 -->
+        <div class="tab-content active" id="tab-story">
+            <div class="card">
+                <div class="card-title"><span class="icon">📖</span> 故事背景</div>
+                <div style="font-size:0.9rem; line-height:1.9; color:#1a1a1a;">
+                    <p>A市，一座普通的中国城市。这里有索拉里斯中学与提瓦特大学，还有几条种满梧桐树的街道。</p>
+                    <p style="margin-top:0.5rem;">你生活在这里。你的母亲江晚晚独自把你带大，她是你最亲近的人，也是你从未真正了解过的人。楼下的苏眠是你从小一起长大的青梅竹马，你们在同一间教室里度过了一个又一个春夏秋冬。她的闺蜜林栀常来串门，那个斯文安静的女生总在不经意间出现在你视线里。而你的老师陈晚，她看你的目光偶尔会让你觉得——她似乎在透过你看另一个人，又或者，她在试图看清你身上某个连你自己都没注意到的角落。</p>
+                    <p style="margin-top:0.5rem;">四个女人，四种关系，四种未说出口的渴望。</p>
+                    <p style="margin-top:0.5rem; font-weight:800; color:#000; font-style:italic;">这是一个关于成长、暧昧、与逾越的故事。你准备好走进她们的世界了吗？</p>
+                </div>
+            </div>
+        </div>
+        <!-- 角色设定 -->
+        <div class="tab-content" id="tab-characters">
+            <div class="card">
+                <div class="card-title"><span class="icon">👩</span> 角色档案</div>
+                <div class="char-card">
+                    <div class="name">江晚晚</div>
+                    <div class="tag">母亲 · 41岁</div>
+                    <div class="desc">你的亲生母亲。温和持家，早年离异后独自把你带大。她是一个好妈妈，却早已忘记了自己也是一个女人。她的生活全部围绕你展开——你的升学、换季的衣服、每一顿晚饭，这些琐碎的日常构成了她全部的人生意义。</div>
+                    <div class="whisper">“我最近总是梦到你小时候的样子。醒来之后看着现在的你，觉得好陌生。你是什么时候长大的呢……妈妈是不是老了。”</div>
+                </div>
+                <div class="char-card">
+                    <div class="name">陈晚</div>
+                    <div class="tag">教师 · 25岁</div>
+                    <div class="desc">你的老师。年轻、严谨、冷淡，教学认真，对学生的距离感把握得恰到好处。她是同事眼中的优秀教师，是你父母口中“要多向人家学习”的榜样。但你在她的目光里偶尔会捕捉到一丝不属于老师的温度——那种温度稍纵即逝，快到让你怀疑是自己的错觉。</div>
+                    <div class="whisper">“你上课总是看着窗外。我站在讲台上，在你视线的边缘。我不知道你在看什么——但我希望有一天，你看向窗外之后，能把目光收回到我身上。”</div>
+                </div>
+                <div class="char-card">
+                    <div class="name">苏眠</div>
+                    <div class="tag">青梅竹马 · 17岁</div>
+                    <div class="desc">住在你家楼下的青梅竹马，和你从小一起长大。她开朗爱闹，在你面前从不设防，但她有一个她守了很多年的秘密——关于她自己的身体。她曾在初三毕业那年吻了你，然后跑掉了。那个吻之后她装作什么都没发生过，但你看得出来，她一直在等你先开口。</div>
+                    <div class="whisper">“你还记得毕业那天我亲了你吗。我跑掉不是因为害羞……我是怕你发现我藏了好多年的那个秘密。如果我说了，你会不会不要我了。”</div>
+                </div>
+                <div class="char-card">
+                    <div class="name">林栀</div>
+                    <div class="tag">暧昧对象 · 22岁</div>
+                    <div class="desc">苏眠的闺蜜，本市的大学生。她经常来苏眠家玩，你因此认识了她。她斯文、安静、存在感不强，但你每次见到她时，她都在看你。她加了你微信，却从不主动找你聊天。她知道你在想她，但她不说破——她好像很享受那个等你来发现她的过程。</div>
+                    <div class="whisper">“我其实不是来找苏眠的。我是来看你的。但你好像还没发现这一点。不着急——我最擅长的，就是等人自己走到我面前来。”</div>
+                </div>
+            </div>
+        </div>
+        <!-- 玩家配置 -->
+        <div class="tab-content" id="tab-config">
+            <div class="card">
+                <div class="card-title"><span class="icon">✎</span> 自定义你的角色</div>
+                <div class="field">
+                    <label>姓名</label>
+                    <input type="text" id="playerName" placeholder="你的名字">
+                </div>
+                <div class="row2">
+                    <div class="field">
+                        <label>年龄</label>
+                        <div class="slider-container">
+                            <input type="range" id="ageSlider" min="12" max="22" value="17" step="1">
+                            <span class="slider-value" id="ageDisplay">17</span>
+                        </div>
+                        <div class="age-tip" id="ageStage">高中生 · 学业的压力与身体的躁动交织在一起，她们的目光在你身上停留的时间越来越长。</div>
+                    </div>
+                    <div class="field">
+                        <label>身高 (cm)</label>
+                        <div class="slider-container">
+                            <input type="range" id="heightSlider" min="155" max="195" value="175" step="1">
+                            <span class="slider-value" id="heightDisplay">175</span>
+                        </div>
+                        <div class="hint-text" id="heightHint">普通身高，走在人群中不会太显眼。</div>
+                    </div>
+                </div>
+                <div class="field">
+                    <label>外貌特征</label>
+                    <textarea id="playerAppearance" placeholder="发型、眸色、气质、常穿的衣物……"></textarea>
+                </div>
+                <div class="field">
+                    <label>性格描述</label>
+                    <textarea id="playerPersonality" placeholder="沉默 / 温和 / 懒散 / 敏锐……"></textarea>
+                </div>
+                <div class="card-title" style="margin-top:0.8rem; border-top:3px solid #000; padding-top:0.6rem;"><span class="icon">🍆</span> 肉棒尺寸</div>
+                <div class="row2">
+                    <div class="field">
+                        <label>长度 (cm)</label>
+                        <div class="slider-container">
+                            <input type="range" id="lengthSlider" min="3" max="25" value="14" step="0.5">
+                            <span class="slider-value" id="lengthDisplay">14</span>
+                        </div>
+                        <div class="hint-text" id="lengthHint">中规中矩，不至于让她失望。</div>
+                    </div>
+                    <div class="field">
+                        <label>直径 (cm)</label>
+                        <div class="slider-container">
+                            <input type="range" id="girthSlider" min="2" max="6" value="3.5" step="0.1">
+                            <span class="slider-value" id="girthDisplay">3.5</span>
+                        </div>
+                        <div class="hint-text" id="girthHint">正好能被她的手指圈住。</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- 开场白 -->
+        <div class="tab-content" id="tab-opening">
+            <div class="card">
+                <div class="card-title"><span class="icon">🎬</span> 选择开场</div>
+                <div id="openingGroup" class="preset-grid"></div>
+                <div class="field" style="margin-top:1rem;">
+                    <label>自定义开场白</label>
+                    <textarea id="customOpening" placeholder="写下你自己的开场……" style="min-height:80px;"></textarea>
+                </div>
+            </div>
+        </div>
+        <!-- 学生档案 -->
+        <div class="tab-content" id="tab-archive">
+            <div class="card">
+                <div class="card-title"><span class="icon">📋</span> 学生档案</div>
+                <div class="preview-box" id="previewOutput"><span class="placeholder">请先在其他页面完成设定，然后点击「生成档案」</span></div>
+                <div class="btn-row">
+                    <button class="btn" id="generateBtn">✦ 生成档案</button>
+                    <button class="btn btn-secondary" id="copyBtn">📋 复制</button>
+                </div>
+            </div>
+        </div>
+        <div class="footer">♡ 我的青春年华 · 恋爱指南 ♡</div>
+    </div>
+    <div class="toast" id="toast"></div>
+    <script>
+        (function() {
+            const toast = document.getElementById('toast');
+            function showToast(msg) { toast.textContent = msg; toast.classList.add('show'); setTimeout(() => toast.classList.remove('show'), 2200); }
+            // 标签切换
+            const tabBtns = document.querySelectorAll('.tab-btn');
+            const tabContents = document.querySelectorAll('.tab-content');
+            tabBtns.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    tabBtns.forEach(b => b.classList.remove('active'));
+                    this.classList.add('active');
+                    tabContents.forEach(tc => tc.classList.remove('active'));
+                    document.getElementById('tab-' + this.dataset.tab).classList.add('active');
+                });
+            });
+            // 玩家配置
+            const playerName = document.getElementById('playerName');
+            const ageSlider = document.getElementById('ageSlider');
+            const ageDisplay = document.getElementById('ageDisplay');
+            const ageStage = document.getElementById('ageStage');
+            const heightSlider = document.getElementById('heightSlider');
+            const heightDisplay = document.getElementById('heightDisplay');
+            const heightHint = document.getElementById('heightHint');
+            const playerAppearance = document.getElementById('playerAppearance');
+            const playerPersonality = document.getElementById('playerPersonality');
+            const lengthSlider = document.getElementById('lengthSlider');
+            const lengthDisplay = document.getElementById('lengthDisplay');
+            const lengthHint = document.getElementById('lengthHint');
+            const girthSlider = document.getElementById('girthSlider');
+            const girthDisplay = document.getElementById('girthDisplay');
+            const girthHint = document.getElementById('girthHint');
+
+            function getIdentity(age) {
+                const a = Number(age);
+                if (a <= 15) return { label: '初中生', desc: '稚嫩的身体正在苏醒，她看你时带着一丝好奇与侵略性，像在打量一只即将落入掌心的猎物。' };
+                if (a <= 18) return { label: '高中生', desc: '学业的压力与身体的躁动交织在一起，她的目光在你身上停留的时间越来越长。' };
+                return { label: '大学生', desc: '成熟的身躯不再掩饰欲望，她靠近你的时候，你能嗅到她身上那股若有若无的、属于成年人的气息。' };
+            }
+            function getAgeHint(age) {
+                const a = Number(age); const r = Math.random();
+                if (a <= 15) return r < 0.5 ? '这么小就这么有精神……长大还得了？姐姐等你长到够用那天哦。' : '呀……已经会硬邦邦了呢，让姐姐看看你能坚持多久不哭。';
+                else if (a <= 18) return r < 0.5 ? '高中生就这么大了……以后还不得把姐姐操得下不了床？' : '在学校憋坏了吧？来姐姐这儿，今晚让你好好释放一下。';
+                else return r < 0.5 ? '大学生了呀……正是最能干的年纪，姐姐今晚不想下床了。' : '成熟的身体配上这根东西……姐姐已经湿了，你感觉到了吗？';
+            }
+            function getHeightHint(h) {
+                const h2 = Number(h); const r = Math.random();
+                if (h2 < 165) return r < 0.5 ? '小小的真可爱……抱在怀里刚好一口吃掉。' : '这么矮，踮起脚才够到我，但没关系——姐姐弯下腰来含住你。';
+                if (h2 < 175) return r < 0.5 ? '不高不矮，站在你面前刚好到你下巴，一低头就能吻到你。' : '这个身高最方便了——你坐着我站着，你抬头就能看到我为你张开的腿间。';
+                if (h2 < 185) return r < 0.5 ? '高个子真让人有安全感……但你低头含住我的时候更让我心动。' : '挺拔的身材，每次拥抱都要仰头看你——这个角度被你进入的时候特别深。';
+                return r < 0.5 ? '这么高……跪在你面前的时候刚好到你腰际，一抬头就能碰到它。' : '高大的身材，站在你面前时我需要踮起脚尖才能吻到你——但如果是跪着的话，就刚刚好。';
+            }
+            function getLengthHint(l) {
+                const l2 = Number(l); const r = Math.random();
+                if (l2 <= 6) return r < 0.5 ? '这么一点点……姐姐一口就含到底了，你会不会哭啊？' : '小小的真可爱……让姐姐用舌头好好疼爱它。';
+                if (l2 <= 9) return r < 0.5 ? '偏短呢……但没关系，含进去的时候刚好顶到喉咙口，不会让姐姐难受。' : '虽然不算长，但胜在灵活——姐姐会好好引导你找到最舒服的位置。';
+                if (l2 <= 12) return r < 0.5 ? '中规中矩的尺寸，姐姐含得住，也吞得下——但你别动太快哦。' : '这个长度刚好吃一半露一半，姐姐会用舌尖逗你露在外面的那一截。';
+                if (l2 <= 15) return r < 0.5 ? '不错嘛……含进去刚好填满姐姐的嘴，再多一寸就要噎住了。' : '长度正好，坐上去的时候能顶到底，姐姐会忍不住自己摇起来。';
+                if (l2 <= 18) return r < 0.5 ? '有点长了……姐姐得深呼吸才能全部吞进去，你会不会心疼我？' : '这么长……姐姐看着它一点点没入自己体内，光是看着就要高潮了。';
+                if (l2 <= 21) return r < 0.5 ? '这么长……姐姐看了腿都软了，你确定全部进来我不会坏掉吗？' : '好大……姐姐要用双手才能握住，待会儿进去的时候你要慢一点……';
+                return r < 0.5 ? '天啊……这个尺寸姐姐还是第一次见，你温柔一点好不好……' : '怪物一样的大小……姐姐光是含住龟头就快撑不住了，你真要全部放进来吗……';
+            }
+            function getGirthHint(g) {
+                const g2 = Number(g); const r = Math.random();
+                if (g2 <= 2.5) return r < 0.5 ? '好细……姐姐轻轻一吸就含住了，你都没感觉吧？' : '细细的茎身，在姐姐嘴里像一根温热的手指——我会用舌头好好裹住你的。';
+                if (g2 <= 3) return r < 0.5 ? '偏细，姐姐的嘴唇能圈住你但没什么实感——你要多动动才行哦。' : '不太粗，含在嘴里刚好不费劲，姐姐可以一边含你一边做别的事。';
+                if (g2 <= 3.5) return r < 0.5 ? '粗细适中，进入的时候刚好撑开姐姐的内壁却不会疼——你是会照顾人的类型呢。' : '刚刚好——姐姐的手指圈住你时能感受到那份充实，待会儿放进下面也会很舒服。';
+                if (g2 <= 4) return r < 0.5 ? '有点粗了……姐姐的嘴唇需要很用力才能含稳，你会不会心疼我嘴酸？' : '粗粗的茎身塞进嘴里时有点费劲，但姐姐喜欢这种被撑满的感觉。';
+                if (g2 <= 4.5) return r < 0.5 ? '好粗……姐姐得用双手才能握住你的根部，待会儿进去的时候你要轻一点。' : '这么粗壮的茎身……进入的时候像灵魂都会被撑满，姐姐光是看着就湿透了。';
+                if (g2 <= 5) return r < 0.5 ? '这么粗……姐姐的阴道口要被撑成你的形状了，你要负责哦。' : '好厉害……姐姐必须用润滑才能吞下你，你会不会嫌我麻烦？';
+                return r < 0.5 ? '天啊……这么粗会死人的……你确定我装得下吗……' : '怪物一样的直径……姐姐要用两只手掰开阴唇才能对准，进去之后连动都动不了了……';
+            }
+            function updateAllHints() {
+                const age = Number(ageSlider.value);
+                const ident = getIdentity(age);
+                ageStage.textContent = ident.label + ' · ' + ident.desc;
+                heightHint.textContent = getHeightHint(Number(heightSlider.value));
+                lengthHint.textContent = getLengthHint(Number(lengthSlider.value));
+                girthHint.textContent = getGirthHint(Number(girthSlider.value));
+                updateOpenings(age);
+            }
+            ageSlider.addEventListener('input', function() {
+                ageDisplay.textContent = this.value;
+                updateAllHints();
+            });
+            heightSlider.addEventListener('input', function() { heightDisplay.textContent = this.value; heightHint.textContent = getHeightHint(Number(this.value)); });
+            lengthSlider.addEventListener('input', function() { lengthDisplay.textContent = this.value; lengthHint.textContent = getLengthHint(Number(this.value)); });
+            girthSlider.addEventListener('input', function() { girthDisplay.textContent = this.value; girthHint.textContent = getGirthHint(Number(this.value)); });
+
+            // 开场白预设（均超过75字）
+            const openings = {
+                jnr: {
+                    '江晚晚': '你放学回家，发现妈妈今天比往常沉默。她坐在客厅里没有开灯，你问她怎么了，她只是摇了摇头说“没事”。你走近的时候，看到她膝盖上放着那本泛黄的相册——翻开的那一页是你小学毕业时你们俩的合影。你站在她身后，不知道该怎么开口，但她拉住了你的手，说：“你小时候总粘着我，现在怎么不粘了。”',
+                    '陈晚': '放学后你被叫到办公室。陈老师坐在办公桌前批改作业，没有抬头看你。你站了好一会儿她才开口：“你最近上课总走神，是家里有什么事吗。”你答不上来。她终于抬起头看了你一眼——那一眼里有某种你从未在老师脸上见过的情绪，像是担心，又像是别的什么。她的手指在笔杆上轻轻摩挲着，等你回答。',
+                    '苏眠': '苏眠今天一整天没有和你说话。你不太确定自己哪里惹到她了。放学后她一个人先走了，你追到楼下拉住她的手腕。她停下脚步，没有回头，但她的肩膀在微微发抖。“你是不是觉得我很烦。”她问。你还没回答，她自己先摇了摇头，然后转过身来，眼眶有点红，“算了，你别说了，我不想听。”',
+                    '林栀': '你在苏眠家第一次见到林栀。她坐在床边翻一本漫画，听到你进来只是微微点了点头，然后继续看书。那天她几乎没有和你说过一句话。但后来苏眠告诉你，林栀回去之后问她：“刚刚那个男生叫什么名字。”苏眠说到这里时笑得意味深长。你当时没太在意，后来才意识到，那可能是你们故事的开始。'
+                },
+                snr: {
+                    '江晚晚': '晚自习结束回到家，客厅的灯还亮着。妈妈蜷在沙发上睡着了，电视开着音量调得很小。你关掉电视想叫醒她回房睡，却发现她的手攥着你的校服外套一角。你不记得那件外套是什么时候脱在沙发上的。你轻轻抽了一下，没抽动。她似乎在做梦，眉头微微皱着，嘴里含混地念了一个字，像是你的名字，又不太像。你蹲下来看她，心里忽然涌起一阵说不清的酸涩。',
+                    '陈晚': '你被留下来补课。教室里只剩你和陈老师两个人，她在黑板上写解题步骤，粉笔的声音在空荡荡的教室里格外清晰。你盯着她的背影，忽然注意到她握粉笔的手停顿了一下。她没有回头，只是用一种比平时低一些的声音说：“你在看哪里。”那一刻你意识到——她一直都知道你在看她。她只是从来没有戳破。今天她不想再忍了。',
+                    '苏眠': '下晚自习后你们一起走回家。路上很安静，路灯把影子拉长又缩短。苏眠走在你前面半步，她的影子偶尔和你叠在一起。她忽然停下来转身看着你。路灯从她背后照过来，她的表情藏在阴影里，但声音很清晰：“你敢不敢亲我。”她没有笑，不是在开玩笑。夜风从你们之间穿过去，她的睫毛轻轻颤了一下，“不亲的话，我以后再也不问了。”',
+                    '林栀': '手机震了一下，是林栀发来的消息。一张照片——她站在你家楼下，附了一行字：“路过，刚好看到你房间灯还亮着。”你走到窗边往下看，她正朝你挥手。你下楼去找她，她说在附近吃饭顺路经过。但你注意到她穿了一件新裙子，那种不太像出来吃晚饭会穿的裙子。她看着你，等你先开口问她什么。你没有问，她也没有解释。你们就这样在楼下站着说了很久的话。'
+                },
+                uni: {
+                    '江晚晚': '寒假回家，你发现妈妈变了。说不上哪里变了——她穿了一件你没见过的新毛衣，头发也修剪过了。晚上你陪她看电视，她靠在你肩上，你闻到她的头发有一股陌生的香气。她换了洗发水。你侧过头，看到她嘴角有一丝很淡的弧度。那是你爸离开后她脸上再也没有出现过的表情。她没有看你，但她的身体往你怀里靠得更深了一些，像在确认你还在。',
+                    '陈晚': '毕业两年后你回母校办事，在走廊上遇到了陈老师。她看到你时愣了一下，然后微笑着打招呼。你们聊了几句近况，她看起来和从前一样——严谨、冷淡、有分寸。告别的时候她突然叫住你，犹豫了几秒然后说：“你变了很多。以前你坐第一排的时候，我一眼就能看到你。”你低头看她，发现她比记忆中矮了一些。其实是你长高了，也可能是你第一次用平视以外的角度看她。',
+                    '苏眠': '苏眠大二了，你们很久没有单独见过了。寒假回来那天她来你家敲门。你开门的时候她站在门口，穿着一件宽松的毛衣，头发比以前长了一些。她笑了笑说：“好久不见。”你们在你房间里聊了一整个下午，像从前一样瞎扯、互相挖苦。天色暗下来时她忽然安静了，安静了很长时间。然后她站起来走到你面前，在昏暗中轻轻碰了一下你的嘴角。只是一下，然后她退后半步看着你：“好了，这下我圆满了。”',
+                    '林栀': '林栀毕业了。她在学校附近租了一间小公寓，搬家那天你去帮忙。东西不多，最重的是一箱书。你帮她整理书架时她靠在窗边看着你，隔了一会儿轻声说：“你知道吗，我从大一开始就在等这一天——等你来帮我搬家的这一天。”你转过头，她正对你微笑。那种带着距离感的微笑你没有见过第二次，因为从那天起那层距离感就消失了。她说完低下头翻了一页书，耳根是红的。'
+                }
+            };
+
+            function updateOpenings(age) {
+                const a = Number(age);
+                let key = 'uni';
+                if (a <= 15) key = 'jnr';
+                else if (a <= 18) key = 'snr';
+                const container = document.getElementById('openingGroup');
+                container.innerHTML = '';
+                const selected = openings[key];
+                const nameMap = { '江晚晚': '江晚晚 · 母亲', '陈晚': '陈晚 · 教师', '苏眠': '苏眠 · 青梅竹马', '林栀': '林栀 · 暧昧对象' };
+                Object.keys(selected).forEach(char => {
+                    const div = document.createElement('div');
+                    div.className = 'preset-btn';
+                    div.dataset.char = char;
+                    div.dataset.text = selected[char];
+                    div.innerHTML = `<div class="p-title">${nameMap[char] || char}</div><div class="p-desc">${selected[char].substring(0, 30)}…</div>`;
+                    div.addEventListener('click', function() {
+                        document.querySelectorAll('#openingGroup .preset-btn').forEach(b => b.classList.remove('active'));
+                        this.classList.add('active');
+                    });
+                    container.appendChild(div);
+                });
+            }
+            updateOpenings(ageSlider.value);
+
+            const previewOutput = document.getElementById('previewOutput');
+            const generateBtn = document.getElementById('generateBtn');
+            const copyBtn = document.getElementById('copyBtn');
+            const customOpening = document.getElementById('customOpening');
+
+            function generateArchive() {
+                const name = playerName.value.trim() || '你';
+                const age = ageSlider.value;
+                const ident = getIdentity(age);
+                const height = heightSlider.value;
+                const appearance = playerAppearance.value.trim() || '未填写';
+                const personality = playerPersonality.value.trim() || '未填写';
+                const length = lengthSlider.value;
+                const girth = girthSlider.value;
+                const selectedBtn = document.querySelector('#openingGroup .preset-btn.active');
+                let openingText = customOpening.value.trim();
+                if (!openingText && selectedBtn) openingText = selectedBtn.dataset.text;
+                if (!openingText) openingText = '你站在A市的街头，风吹过来，你不知道今晚会发生什么。';
+
+                const output = `【学生档案】
+━━━━━━━━━━━━━━━━
+姓名：${name}
+身份：${ident.label}
+年龄：${age}岁
+身高：${height}cm
+外貌：${appearance}
+性格：${personality}
+
+【肉棒尺寸】
+长度：${length}cm
+直径：${girth}cm
+━━━━━━━━━━━━━━━━
+【开场】
+${openingText}`;
+
+                previewOutput.innerHTML = output.replace(/\n/g, '<br>');
+                return output;
+            }
+
+            generateBtn.addEventListener('click', function() {
+                const text = generateArchive();
+                if (text) showToast('♡ 档案已生成');
+            });
+            copyBtn.addEventListener('click', function() {
+                const text = previewOutput.innerText || previewOutput.textContent;
+                if (!text || text.includes('请先')) { showToast('请先生成档案'); return; }
+                const clean = text.replace(/<br>/g, '\n').replace(/ /g, ' ');
+                navigator.clipboard.writeText(clean).then(() => { showToast('♡ 已复制到剪贴板'); }).catch(() => { const ta = document.createElement('textarea'); ta.value = clean; document.body.appendChild(ta); ta.select(); document.execCommand('copy'); document.body.removeChild(ta); showToast('♡ 已复制到剪贴板'); });
+            });
+            updateAllHints();
+        })();
+    </script>
+</body>
+</html>
